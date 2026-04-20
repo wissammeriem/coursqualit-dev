@@ -1,0 +1,11 @@
+#!/bin/bash
+# Script somme.sh - Exercice 2.1
+
+if [ $# -ne 2 ]; then
+    echo "Erreur: Deux arguments requis"
+    echo "Usage: ./somme.sh nombre1 nombre2"
+    exit 1
+fi
+
+resultat=$(( $1 + $2 ))
+echo "La somme de $1 et $2 est: $resultat"

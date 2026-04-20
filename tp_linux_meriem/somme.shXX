@@ -1,0 +1,1 @@
+echo "Somme: $1 + $2 = $resultat"

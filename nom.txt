@@ -1,0 +1,17 @@
+# Créer toto.c pour les tests wc
+echo "première ligne" > toto.c
+echo "deuxième ligne" >> toto.c
+echo "troisième ligne" >> toto.c
+cat > compte_rebours.sh << 'EOF'
+#!/bin/bash
+# 3.1 - Boucle while 5 à 1
+
+i=5
+while [ $i -ge 1 ]; do
+    echo $i
+    i=$((i-1))
+done
+echo "Terminé !"
+EOF
+
+chmod +x compte_rebours.sh
