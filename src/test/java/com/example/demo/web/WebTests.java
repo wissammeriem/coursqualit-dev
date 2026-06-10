@@ -26,7 +26,6 @@ class WebTests {
     @Autowired
     MockMvc mockMvc;
 
-    // Test 1 : POST /voiture doit ajouter une voiture
     @Test
     void testAjouterVoiture() throws Exception {
         String voitureJson = "{\"marque\":\"Ferrari\",\"prix\":20000}";
@@ -39,7 +38,6 @@ class WebTests {
         verify(statistiqueImpl, times(1)).ajouter(any(Voiture.class));
     }
 
-    // Test 2 : GET /statistique quand il y a des voitures
     @Test
     void testGetStatistiquesSucces() throws Exception {
         Echantillon mockEchantillon = new Echantillon(3, 15000);
@@ -51,7 +49,6 @@ class WebTests {
                 .andExpect(jsonPath("$.prixMoyen").value(15000));
     }
 
-    // Test 3 : GET /statistique quand aucune voiture (division par zéro)
     @Test
     void testGetStatistiquesAucuneVoiture() throws Exception {
         when(statistiqueImpl.prixMoyen()).thenThrow(new ArithmeticException());
@@ -60,4 +57,3 @@ class WebTests {
                 .andExpect(status().isNotFound());
     }
 }
-
