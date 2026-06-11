@@ -24,7 +24,7 @@ class StatistiqueImplTest {
     }
 
     @Test
-    void testPrixMoyenAvecDeuxVoitures() {
+    void testPrixMoyenDeuxVoitures() {
         statistique.ajouter(new Voiture("Ferrari", 20000));
         statistique.ajouter(new Voiture("Fiat", 10000));
         Echantillon e = statistique.prixMoyen();
