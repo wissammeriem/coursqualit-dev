@@ -15,7 +15,7 @@ class StatistiqueImplTest {
     }
 
     @Test
-    void testAjouterEtPrixMoyenUneVoiture() {
+    void testAjouterUneVoiture() {
         Voiture v = new Voiture("Clio", 10000);
         statistique.ajouter(v);
         Echantillon e = statistique.prixMoyen();
@@ -24,7 +24,7 @@ class StatistiqueImplTest {
     }
 
     @Test
-    void testPrixMoyenAvecDeuxVoitures() {
+    void testPrixMoyenDeuxVoitures() {
         statistique.ajouter(new Voiture("Ferrari", 20000));
         statistique.ajouter(new Voiture("Fiat", 10000));
         Echantillon e = statistique.prixMoyen();
@@ -34,7 +34,7 @@ class StatistiqueImplTest {
 
     @Test
     void testPrixMoyenListeVide() {
-        Exception exception = assertThrows(ArithmeticException.class, () -> {
+        assertThrows(ArithmeticException.class, () -> {
             statistique.prixMoyen();
         });
     }
