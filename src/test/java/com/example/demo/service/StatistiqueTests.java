@@ -3,22 +3,34 @@ package com.example.demo.service;
 import com.example.demo.data.Voiture;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class StatistiqueTests {
 
     @Test
-    void testStatistique() {
+    void prixMoyenAvecUneVoiture() {
         StatistiqueImpl statistique = new StatistiqueImpl();
-        Voiture v1 = new Voiture("Ferrari", 3000);
-        Voiture v2 = new Voiture("Porsche", 3000);
-        statistique.ajouter(v1);
-        statistique.ajouter(v2);
-        Echantillon echantillon = statistique.prixMoyen();
-        assertEquals(3000, echantillon.getPrixMoyen());
-        assertEquals(2, echantillon.getNombreDeVoitures());
+        statistique.ajouter(new Voiture("Renault", 10000));
+        Echantillon resultat = statistique.prixMoyen();
+        assertEquals(1, resultat.getNombreDeVoitures());
+        assertEquals(10000, resultat.getPrixMoyen());
     }
 
+    @Test
+    void prixMoyenAvecPlusieursVoitures() {
+        StatistiqueImpl statistique = new StatistiqueImpl();
+        statistique.ajouter(new Voiture("Renault", 10000));
+        statistique.ajouter(new Voiture("Peugeot", 20000));
+        statistique.ajouter(new Voiture("Citroen", 30000));
+        Echantillon resultat = statistique.prixMoyen();
+        assertEquals(3, resultat.getNombreDeVoitures());
+        assertEquals(20000, resultat.getPrixMoyen());
+    }
+
+    @Test
+    void prixMoyenSansVoiture() {
+        StatistiqueImpl statistique = new StatistiqueImpl();
+        assertThrows(ArithmeticException.class, statistique::prixMoyen);
+    }
 }
