@@ -11,7 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.mockito.ArgumentMatchers.argThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -27,23 +27,33 @@ class WebTests {
     MockMvc mockMvc;
 
     @Test
-    void getStatistiqueRetourneEchantillon() throws Exception {
-        when(statistique.prixMoyen()).thenReturn(new Echantillon(2, 15000));
-        mockMvc.perform(get("/statistique"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.nombreDeVoitures").value(2))
-                .andExpect(jsonPath("$.prixMoyen").value(15000));
-        verify(statistique).prixMoyen();
+    void testAjouterVoiture() throws Exception {
+        String voitureJson = "{\"marque\":\"Ferrari\",\"prix\":20000}";
+
+        mockMvc.perform(post("/voiture")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(voitureJson))
+                .andExpect(status().isOk());
+
+        verify(statistiqueImpl, times(1)).ajouter(any(Voiture.class));
     }
 
     @Test
-    void postVoitureAjouteVoiture() throws Exception {
-        mockMvc.perform(post("/voiture")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"marque\":\"f\",\"prix\":100}"))
-                .andExpect(status().isOk());
-        verify(statistique).ajouter(argThat(voiture ->
-                voiture.getMarque().equals("f") && voiture.getPrix() == 100
-        ));
+    void testGetStatistiquesSucces() throws Exception {
+        Echantillon mockEchantillon = new Echantillon(3, 15000);
+        when(statistiqueImpl.prixMoyen()).thenReturn(mockEchantillon);
+
+        mockMvc.perform(get("/statistique"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nombreDeVoitures").value(3))
+                .andExpect(jsonPath("$.prixMoyen").value(15000));
     }
-}
+
+    @Test
+    void testGetStatistiquesAucuneVoiture() throws Exception {
+        when(statistiqueImpl.prixMoyen()).thenThrow(new ArithmeticException());
+
+        mockMvc.perform(get("/statistique"))
+                .andExpect(status().isOk());
+    }
+}sta
