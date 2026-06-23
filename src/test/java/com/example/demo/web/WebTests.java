@@ -2,7 +2,7 @@ package com.example.demo.web;
 
 import com.example.demo.data.Voiture;
 import com.example.demo.service.Echantillon;
-import com.example.demo.service.StatistiqueImpl;
+import com.example.demo.service.Statistique;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class WebTests {
 
     @MockBean
-    StatistiqueImpl statistiqueImpl;
+    Statistique statistique;
 
     @Autowired
     MockMvc mockMvc;
